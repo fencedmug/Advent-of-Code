@@ -8,7 +8,7 @@ Console.WriteLine("AOC 2021\n");
 //find the latest day to run
 var methods = Assembly.GetExecutingAssembly()
     .GetTypes()
-    .Where(type => type.Name.Contains("Day"))
+    .Where(type => type.Name.Contains("Day04"))
     .OrderBy(x => x.Name)
     .Last()
     .GetMethods(BindingFlags.Public | BindingFlags.Static);

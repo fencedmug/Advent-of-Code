@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace System
+namespace AOC2021.Extensions
 {
     public static class StringExtensions
     {
@@ -13,5 +13,8 @@ namespace System
 
         public static string[] IntoWords(this string text) =>
             text.Split(' ', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
+
+        public static int[][] IntoIntArrays(this string text) =>
+            text.IntoLines().Select(line => line.Select(c => int.Parse(c.ToString())).ToArray()).ToArray();
     }
 }
