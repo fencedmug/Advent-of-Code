@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -18,14 +19,21 @@ var tests = File.ReadAllText("inputs\\" + dayName + "_tests.txt");
 var inputs = File.ReadAllText("inputs\\" + dayName + "_inputs.txt");
 
 Console.WriteLine($"Solving {dayName}");
+var stopwatch = new Stopwatch(); //temporary until I get BenchmarkDotNet
 foreach (var method in methods)
 {
     Console.WriteLine($"Running {method.Name}");
     Console.WriteLine("Using tests: ");
+    stopwatch.Restart();
     method.Invoke(null, new[] { tests });
+    stopwatch.Stop();
+    Console.WriteLine($"Run time: {stopwatch.ElapsedMilliseconds:F3}ms");
 
     Console.WriteLine("Using Inputs: ");
+    stopwatch.Restart();
     method.Invoke(null, new[] { inputs });
+    stopwatch.Stop();
+    Console.WriteLine($"Run time: {stopwatch.ElapsedMilliseconds:F3}ms");
 
     Console.WriteLine();
 }
