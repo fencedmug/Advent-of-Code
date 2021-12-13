@@ -115,5 +115,91 @@ namespace AOC2021
 
             Cout.WriteLine($"No. of paths: {done.Count}");
         }
+
+        // Attempt to optimize the counting :: not going well, removed half a sec maybe
+        public static void SolveTwo_v2(string input)
+        {
+            var map = CreateMap(input);
+
+            //let's not start at "start" but at it's neighbours instead
+            //this way I do not have to check for "start" in the list
+            var starting = map["start"].Select(node => Path.Create(node));
+            var stack = new Stack<Path>(starting);
+
+            var done = 0;
+            while (stack.TryPop(out var path))
+            {
+                foreach (var nb in map[path.Nodes.Last()])
+                {
+                    if (nb.Length == 5) //"start"
+                        continue;
+
+                    if (nb.Length == 3) //"end"
+                    {
+                        done++;
+                        continue;
+                    }
+
+                    var newPath = path.Clone();
+                    if (newPath.AddCave(nb))
+                    {
+                        continue;
+                    }
+
+                    stack.Push(newPath);
+                }
+            }
+
+            Cout.WriteLine($"No. of paths: {done}");
+        }
+
+        public struct Path
+        {
+            public List<string> Nodes;
+            public Dictionary<string, int> SmallCaves;
+
+            public bool AddCave(string cave)
+            {
+                Nodes.Add(cave);
+                if (!(cave[0] >= 'a' && cave[0] <= 'z'))
+                {
+                    return false;
+                }
+
+                if (!SmallCaves.ContainsKey(cave))
+                    SmallCaves[cave] = 0;
+
+                SmallCaves[cave]++;
+
+                if (SmallCaves[cave] == 3)
+                    return true;
+
+                if (SmallCaves.Where(kvp => kvp.Value > 1).Count() > 1)
+                    return true;
+
+                return false;
+            }
+
+            public static Path Create(string node)
+            {
+                var path = new Path
+                {
+                    Nodes = new List<string>(),
+                    SmallCaves = new Dictionary<string, int>(),
+                };
+
+                path.AddCave(node);
+                return path;
+            }
+
+            public Path Clone()
+            {
+                return new Path
+                {
+                    Nodes = Nodes.ToList(),
+                    SmallCaves = SmallCaves.ToDictionary(kvp => kvp.Key, kvp => kvp.Value),
+                };
+            }
+        }
     }
 }
