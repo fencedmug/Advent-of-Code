@@ -16,14 +16,14 @@ namespace AOC2021
 
             foreach (var line in lines)
             {
-                if (!line.Contains("fold"))
+                if (line.Contains(","))
                 {
                     var splits = line.Split(',');
                     points.Add(new Point(int.Parse(splits[0]), int.Parse(splits[1])));
                     continue;
                 }
 
-                var fold = line.Substring(11).Split('='); //"fold along " = 11 chars
+                var fold = line[11..].Split('='); //"fold along " = 11 chars
                 var num = int.Parse(fold[1]);
 
                 foreach (var pt in points.ToList())
@@ -31,12 +31,12 @@ namespace AOC2021
                     if (fold[0] == "x" && pt.X > num)
                     {
                         points.Remove(pt);
-                        points.Add(pt.Shift(-2 * (pt.X - num), 0));
+                        points.Add(pt.ShiftX(-2 * (pt.X - num)));
                     }
                     else if (fold[0] == "y" && pt.Y > num)
                     {
                         points.Remove(pt);
-                        points.Add(pt.Shift(0, -2 * (pt.Y - num)));
+                        points.Add(pt.ShiftY(-2 * (pt.Y - num)));
                     }
                 }
 
@@ -56,7 +56,7 @@ namespace AOC2021
 
             foreach (var line in lines)
             {
-                if (!line.Contains("fold"))
+                if (line.Contains(","))
                 {
                     var splits = line.Split(',');
                     points.Add(new Point(int.Parse(splits[0]), int.Parse(splits[1])));

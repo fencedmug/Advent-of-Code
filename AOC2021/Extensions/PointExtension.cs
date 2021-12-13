@@ -8,7 +8,11 @@ namespace AOC2021.Extensions
 {
     public static class PointExtension
     {
-        public static Point Shift(this Point pt, int x = 0, int y = 0) => new Point(pt.X + x, pt.Y + y);
+        public static Point Shift(this Point pt, int dx = 0, int dy = 0) => new Point(pt.X + dx, pt.Y + y);
+        public static Point ShiftX(this Point pt, int dx = 0) => new Point(pt.X + dx, pt.Y);
+        public static Point ShiftY(this Point pt, int dy = 0) => new Point(pt.X, pt.Y + dy);
+        public static void OffsetX(this Point pt, int dx = 0) => pt.X = pt.X + dx;
+        public static void OffsetY(this Point pt, int dy = 0) => pt.Y = pt.Y + dy;
 
         public static IEnumerable<Point> GetAllNeighbours(this Point pt, int width, int height)
         {
