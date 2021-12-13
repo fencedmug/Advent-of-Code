@@ -27,13 +27,13 @@ foreach (var method in methods)
     stopwatch.Restart();
     method.Invoke(null, new[] { tests });
     stopwatch.Stop();
-    Console.WriteLine($"Run time: {stopwatch.ElapsedMilliseconds:F3}ms");
+    Console.WriteLine($"Run time: {stopwatch.Elapsed.TotalMilliseconds:F3}ms");
 
     Console.WriteLine("Using Inputs: ");
     stopwatch.Restart();
     method.Invoke(null, new[] { inputs });
     stopwatch.Stop();
-    Console.WriteLine($"Run time: {stopwatch.ElapsedMilliseconds:F3}ms");
+    Console.WriteLine($"Run time: {stopwatch.Elapsed.TotalMilliseconds:F3}ms");
 
     Console.WriteLine();
 }
