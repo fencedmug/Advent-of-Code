@@ -52,21 +52,21 @@ namespace AOC2021.Extensions
 
         public static IEnumerable<Point> GetStraightNeighbours(this Point pt, int width, int height)
         {
-            var neighbours = new List<Point>();
+            var dx = new int[] { 1, -1, 0, 0 };
+            var dy = new int[] { 0, 0, 1, -1 };
 
-            if (pt.Y != 0)
-                neighbours.Add(pt.Shift(0, -1));
+            var pts = new List<Point>();
 
-            if (pt.X != 0)
-                neighbours.Add(pt.Shift(-1, 0));
+            for (var i = 0; i < dx.Length; i++)
+            {
+                var nbX = pt.X + dx[i];
+                var nbY = pt.Y + dy[i];
 
-            if (pt.Y < height - 1)
-                neighbours.Add(pt.Shift(0, 1));
+                if (nbX >= 0 && nbX < width && nbY >= 0 && nbY < height)
+                    pts.Add(new Point(nbX, nbY));
+            }
 
-            if (pt.X < width - 1)
-                neighbours.Add(pt.Shift(1, 0));
-
-            return neighbours;
+            return pts;
         }
 
         public static IEnumerable<Point> GetStraightNeighbours(this Point pt)
