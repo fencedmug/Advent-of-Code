@@ -38,27 +38,27 @@ namespace AOC2021
             }
 
             nodes[0].Weight = 0;
-            var queue = new Queue<Point>(); // todo: figure out why using stack here gives me different results
-            queue.Enqueue(new Point(0, 0));
-            while (queue.TryDequeue(out var pt))
+            var queue = new PriorityQueue<Point, int>();
+            queue.Enqueue(new Point(0, 0), 0);
+            while (queue.TryDequeue(out var currPt, out var currRisk))
             {
-                var curr = pt.X + pt.Y * width;
+                var curr = currPt.X + currPt.Y * width;
                 if (nodes[curr].Visited)
                     continue;
 
                 nodes[curr].Visited = true;
 
-                foreach (var nb in pt.GetStraightNeighbours(width, height))
+                foreach (var nb in currPt.GetStraightNeighbours(width, height))
                 {
-                    queue.Enqueue(nb);
                     // if new weight is lower than recorded weight it means we found a shorter path
                     // set last to this node; and set new weight in
                     var next = nb.X + nb.Y * width;
-                    var newWeight = nodes[curr].Weight + risks[next];
+                    var newWeight = currRisk + risks[next];
                     if (newWeight < nodes[next].Weight)
                     {
-                        nodes[next].Last = pt;
+                        nodes[next].Last = currPt;
                         nodes[next].Weight = newWeight;
+                        queue.Enqueue(nb, newWeight);
                     }
                 }
             }
@@ -86,7 +86,9 @@ namespace AOC2021
                 nodes[i].Weight = int.MaxValue;
             nodes[0].Weight = 0;
 
-            var queue = new PriorityQueue<Point, int>(); // using a normal queue doesn't give shortest path
+            // Dijkstra’s Shortest Path Algorithm requires us to visit the shortest path
+            // a priority queue here will give us the node with least risk to fulfil the algorithm
+            var queue = new PriorityQueue<Point, int>(); 
             queue.Enqueue(new Point(0, 0), 0);
             while (queue.TryDequeue(out var currPt, out var currWeight))
             {
