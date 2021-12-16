@@ -79,9 +79,9 @@ namespace AOC2021
                         continue;
                     }
 
-                    if (c != openChars.Pop() switch { '(' => ')', '[' => ']', '{' => '}', '<' => '>' })
+                    if (c != openChars.Pop() switch { '(' => ')', '[' => ']', '{' => '}', '<' => '>', _ => ' ' })
                     {
-                        score += c switch { ')' => 3, ']' => 57, '}' => 1197, '>' => 25137 };
+                        score += c switch { ')' => 3, ']' => 57, '}' => 1197, '>' => 25137, _ => 0 };
                         break;
                     }
                 }
@@ -108,9 +108,9 @@ namespace AOC2021
                         continue;
                     }
 
-                    if (c != openChars.Pop() switch { '(' => ')', '[' => ']', '{' => '}', '<' => '>' })
+                    if (c != openChars.Pop() switch { '(' => ')', '[' => ']', '{' => '}', '<' => '>', _ => ' ' })
                     {
-                        score += c switch { ')' => 3, ']' => 57, '}' => 1197, '>' => 25137 };
+                        score += c switch { ')' => 3, ']' => 57, '}' => 1197, '>' => 25137, _ => 0 };
                         break;
                     }
                 }
@@ -180,7 +180,7 @@ namespace AOC2021
                         continue;
                     }
 
-                    if (c != openChars.Pop() switch { '(' => ')', '[' => ']', '{' => '}', '<' => '>' })
+                    if (c != openChars.Pop() switch { '(' => ')', '[' => ']', '{' => '}', '<' => '>', _ => ' ' })
                     {
                         openChars = null;
                         break;
@@ -193,7 +193,7 @@ namespace AOC2021
                 var sum = 0L;
                 while (openChars.TryPop(out var c))
                 {
-                    sum = sum * 5 + c switch { '(' => 1L, '[' => 2L, '{' => 3L, '<' => 4L };
+                    sum = sum * 5 + c switch { '(' => 1L, '[' => 2L, '{' => 3L, '<' => 4L, _ => 0 };
                 }
 
                 points.Add(sum);
