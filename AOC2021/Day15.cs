@@ -87,7 +87,7 @@ namespace AOC2021
             nodes[0].Weight = 0;
 
             // Dijkstra’s Shortest Path Algorithm requires us to visit the shortest path
-            // a priority queue here will give us the node with least risk to fulfil the algorithm
+            // a priority queue here will give us the node with least risk to fulfill the algorithm
             var queue = new PriorityQueue<Point, int>(); 
             queue.Enqueue(new Point(0, 0), 0);
             while (queue.TryDequeue(out var currPt, out var currWeight))
