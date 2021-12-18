@@ -34,6 +34,8 @@ public class Day17
     // went for a solution that simulates all possible points that can hit target
     public static void SolveTwo(string input)
     {
+        // assuming the boundary is always on the lower right of origin
+        // doubt it will work if the boundary is on the left or top of origin
         var parts = input.IntoWords();
         var x_coords = parts[2].Replace("x=", "").Replace(",", "").Split("..");
         var y_coords = parts[3].Split('=').Last().Split("..");
